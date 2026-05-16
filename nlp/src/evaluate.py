@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 
-from attacks import leetspeak_attack
+from attacks import synonym_replacement
 
 
 def evaluate_stability(
@@ -32,7 +32,7 @@ def evaluate_stability(
 
         original_text = sample["sentence"]
 
-        perturbed_text = leetspeak_attack(
+        perturbed_text = synonym_replacement(
             original_text
         )
 

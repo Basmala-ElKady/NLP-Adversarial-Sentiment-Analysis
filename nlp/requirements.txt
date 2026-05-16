@@ -5,3 +5,5 @@ accelerate
 evaluate
 scikit-learn
 numpy
+textattack
+nltk

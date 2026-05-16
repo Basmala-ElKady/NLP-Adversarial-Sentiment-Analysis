@@ -1,4 +1,6 @@
 import random
+import nltk
+from nltk.corpus import wordnet
 
 
 LEETSPEAK_MAPPING = {
@@ -86,3 +88,32 @@ def repeated_character_attack(sentence):
     words[random_index] = word
 
     return " ".join(words)
+
+
+def synonym_replacement(sentence, n=1):
+    """
+    Replace n words in the sentence with their synonyms from WordNet.
+    """
+    try:
+        nltk.data.find('corpora/wordnet')
+    except LookupError:
+        nltk.download('wordnet')
+
+    words = sentence.split()
+    new_words = words.copy()
+    random_word_list = list(set([word for word in words if word.isalnum()]))
+    random.shuffle(random_word_list)
+    num_replaced = 0
+    for random_word in random_word_list:
+        synonyms = []
+        for syn in wordnet.synsets(random_word):
+            for l in syn.lemmas():
+                synonyms.append(l.name())
+        if len(synonyms) > 1:
+            synonym = random.choice(list(set(synonyms)))
+            new_words = [synonym if word == random_word else word for word in new_words]
+            num_replaced += 1
+        if num_replaced >= n:
+            break
+
+    return ' '.join(new_words)

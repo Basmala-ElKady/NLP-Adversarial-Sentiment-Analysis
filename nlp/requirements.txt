@@ -1,9 +1,0 @@
-datasets
-transformers>=4.37.0
-torch
-accelerate
-evaluate
-scikit-learn
-numpy
-textattack
-nltk

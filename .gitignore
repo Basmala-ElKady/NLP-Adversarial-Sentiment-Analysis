@@ -1,2 +1,9 @@
 *.safetensors
-nlp/models/
+frontend/node_modules/
+backend/__pycache__/
+nlp/__pycache__/
+*.pyc
+models/
+.env
+dist/
+build/

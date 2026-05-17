@@ -11,16 +11,18 @@ services:
       - ./nlp/models:/app/nlp/models
     environment:
       - PYTHONUNBUFFERED=1
+      - MODEL_PATH=/app/nlp/models/final_robust_model
     networks:
       - nlp-network
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=http://localhost:8000
     container_name: nlp-frontend
     ports:
       - "3000:80"
-    environment:
-      - VITE_API_URL=http://localhost:8000
     depends_on:
       - backend
     networks:

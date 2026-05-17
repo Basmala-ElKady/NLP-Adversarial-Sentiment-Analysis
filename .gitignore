@@ -4,6 +4,7 @@ backend/__pycache__/
 nlp/__pycache__/
 *.pyc
 models/
+nlp/models/
 .env
 dist/
 build/

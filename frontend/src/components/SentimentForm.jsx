@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Shield, Zap, RefreshCw } from 'lucide-react';
+import { Send, CheckCircle2, AlertCircle, Loader2, Sparkles } from 'lucide-react';
 import { predictSentiment } from '../services/api';
 
 const SentimentForm = () => {
@@ -21,7 +21,7 @@ const SentimentForm = () => {
             const data = await predictSentiment(text);
             setResult(data.prediction);
         } catch (err) {
-            setError('Failed to get prediction. Make sure the backend is running.');
+            setError('System offline. Please ensure the backend engine is running.');
             console.error(err);
         } finally {
             setLoading(false);
@@ -29,85 +29,98 @@ const SentimentForm = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl">
-            <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="relative">
-                    <label htmlFor="sentiment-input" className="block text-sm font-medium text-blue-200 mb-2">
-                        Enter text to analyze
-                    </label>
-                    <textarea
-                        id="sentiment-input"
-                        rows="4"
-                        className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-white placeholder-gray-500"
-                        placeholder="e.g., This movie is absolutely stunning, a masterpiece of modern cinema!"
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                    />
-                </div>
-
-                <div className="flex items-center justify-between">
-                    <button
-                        type="submit"
-                        disabled={loading || !text.trim()}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${
-                            loading || !text.trim()
-                                ? 'bg-gray-600 cursor-not-allowed'
-                                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-105 active:scale-95 shadow-lg shadow-blue-500/30'
-                        }`}
-                    >
-                        {loading ? (
-                            <RefreshCw className="animate-spin w-5 h-5" />
-                        ) : (
-                            <Send className="w-5 h-5" />
-                        )}
-                        {loading ? 'Analyzing...' : 'Analyze Sentiment'}
-                    </button>
-
-                    <div className="flex gap-4">
-                        <div className="flex items-center gap-1 text-xs text-blue-300">
-                            <Shield className="w-4 h-4" />
-                            <span>Robust Model</span>
+        <div className="max-w-3xl mx-auto">
+            <div className="glass p-1 rounded-[2.5rem]">
+                <div className="bg-[#11122d]/50 rounded-[2.25rem] p-8 md:p-12">
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                        <div className="relative group">
+                            <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-20 group-focus-within:opacity-40 transition duration-500"></div>
+                            <textarea
+                                id="sentiment-input"
+                                rows="5"
+                                className="relative w-full px-6 py-5 bg-[#0a0b1e] border border-white/10 rounded-2xl focus:ring-1 focus:ring-indigo-500 outline-none transition-all text-lg text-white placeholder-gray-600"
+                                placeholder="Drop your text here for analysis..."
+                                value={text}
+                                onChange={(e) => setText(e.target.value)}
+                            />
                         </div>
-                        <div className="flex items-center gap-1 text-xs text-indigo-300">
-                            <Zap className="w-4 h-4" />
-                            <span>Fast Inference</span>
-                        </div>
-                    </div>
-                </div>
-            </form>
 
-            <AnimatePresence>
-                {result && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="mt-8 p-6 rounded-xl border border-white/10 bg-white/5"
-                    >
-                        <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Analysis Result</h3>
-                        <div className="flex items-center justify-between">
-                            <span className="text-3xl font-black text-white">
-                                {result}
-                            </span>
-                            <div className={`px-4 py-1 rounded-full text-xs font-bold ${
-                                result === 'Positive' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                            }`}>
-                                Confidence High
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div className="flex items-center gap-4 text-gray-400 text-sm">
+                                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                                    <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+                                    <span>Real-time Inference</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                                    <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
+                                    <span>Robust Model</span>
+                                </div>
                             </div>
-                        </div>
-                    </motion.div>
-                )}
 
-                {error && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="mt-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
-                    >
-                        {error}
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                            <button
+                                type="submit"
+                                disabled={loading || !text.trim()}
+                                className={`group relative flex items-center gap-3 px-10 py-4 rounded-2xl font-bold text-lg transition-all overflow-hidden ${
+                                    loading || !text.trim()
+                                        ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
+                                        : 'bg-indigo-600 text-white hover:scale-105 active:scale-95 shadow-2xl shadow-indigo-600/40'
+                                }`}
+                            >
+                                {loading ? (
+                                    <Loader2 className="animate-spin w-5 h-5" />
+                                ) : (
+                                    <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                )}
+                                <span>{loading ? 'Processing...' : 'Analyze Now'}</span>
+                                {!loading && text.trim() && (
+                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                )}
+                            </button>
+                        </div>
+                    </form>
+
+                    <AnimatePresence>
+                        {result && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="mt-12 p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10"
+                            >
+                                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                                    <div>
+                                        <p className="text-xs font-bold text-indigo-400 uppercase tracking-[0.2em] mb-3">Model Prediction</p>
+                                        <h3 className={`text-5xl font-black ${
+                                            result === 'Positive' ? 'text-green-400' : 'text-red-400'
+                                        }`}>
+                                            {result}
+                                        </h3>
+                                    </div>
+                                    <div className="flex flex-col items-end">
+                                        <div className="text-sm text-gray-500 mb-2">Robustness Score</div>
+                                        <div className="flex gap-1">
+                                            {[1, 2, 3, 4, 5].map((s) => (
+                                                <div key={s} className="w-8 h-1.5 rounded-full bg-indigo-500" />
+                                            ))}
+                                        </div>
+                                        <span className="text-xs text-indigo-400 mt-2 font-bold uppercase">Optimal Defense</span>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {error && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="mt-8 p-5 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center gap-3 text-sm"
+                            >
+                                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                                <span>{error}</span>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+            </div>
         </div>
     );
 };

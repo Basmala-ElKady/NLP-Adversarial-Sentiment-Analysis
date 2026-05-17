@@ -18,4 +18,13 @@ export const predictSentiment = async (text) => {
     }
 };
 
+export const attackText = async (text, attackName) => {
+    try {
+        const response = await api.post('/attack', { text, attack_name: attackName });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export default api;

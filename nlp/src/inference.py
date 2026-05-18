@@ -5,10 +5,14 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 
 import torch
 import torch.nn.functional as F
-from nlp.src.model_loader import model, tokenizer, device
+from nlp.src.model_loader import get_model, get_tokenizer, get_device
 
-def predict_sentiment(text: str):
-    """Predicts sentiment for a given text."""
+def predict_sentiment(text: str, apply_defense: bool = True):
+    """Predicts sentiment for a given text using the robust model in a fast, simple manner."""
+    model = get_model()
+    tokenizer = get_tokenizer()
+    device = get_device()
+    
     inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=128, padding=True).to(device)
     
     with torch.no_grad():
@@ -18,7 +22,6 @@ def predict_sentiment(text: str):
     probs = F.softmax(logits, dim=-1)
     confidence, predicted_class = torch.max(probs, dim=-1)
     
-    # Assuming label 1 is Positive and 0 is Negative (update based on your dataset)
     label = "Positive" if predicted_class.item() == 1 else "Negative"
     
     return {

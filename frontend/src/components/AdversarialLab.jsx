@@ -15,16 +15,19 @@ const AdversarialLab = () => {
     const [selectedAttack, setSelectedAttack] = useState(attack_engine[2].id);
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null);
+    const [error, setError] = useState(null);
     const [copied, setCopied] = useState(false);
 
     const handleAttack = async () => {
         if (!text.trim()) return;
         setLoading(true);
         setResult(null);
+        setError(null);
         try {
             const data = await attackText(text, selectedAttack);
             setResult(data);
         } catch (err) {
+            setError('System offline. Please ensure the backend engine is running.');
             console.error(err);
         } finally {
             setLoading(false);
@@ -101,7 +104,20 @@ const AdversarialLab = () => {
                 {/* Right Side: Results */}
                 <div className="relative">
                     <AnimatePresence mode="wait">
-                        {result ? (
+                        {error ? (
+                            <motion.div
+                                key="error"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="glass p-8 rounded-2xl h-full flex flex-col items-center justify-center text-center border-dashed border-2 border-red-500/20"
+                            >
+                                <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-4">
+                                    <AlertTriangle className="w-8 h-8 text-red-400" />
+                                </div>
+                                <h3 className="text-red-400 font-bold">Attack Simulation Failed</h3>
+                                <p className="text-gray-400 text-sm max-w-[280px] mt-2">{error}</p>
+                            </motion.div>
+                        ) : result ? (
                             <motion.div
                                 key="result"
                                 initial={{ opacity: 0, x: 20 }}

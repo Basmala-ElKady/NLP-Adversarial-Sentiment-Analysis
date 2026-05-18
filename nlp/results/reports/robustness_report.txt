@@ -1,0 +1,51 @@
+============================================================
+📊 ADVERSARIAL ROBUSTNESS REPORT (DEEPWORDBUG)
+============================================================
+
+Total Test Samples: 10
+Clean Model Accuracy: 100.00%
+Robust Model Accuracy under Attack: 10.00%
+Attack Success Rate (ASR): 90.00%
+
+------------------------------------------------------------
+Detailed Samples:
+Original:  "This movie is an absolute masterpiece of modern cinema." (Pred: Positive)
+Perturbed: "This movie is an albsolute amsterpiece of modern inema." (Pred: Negative)
+Success: True
+
+Original:  "I hated every single second of this dreadfully boring film." (Pred: Negative)
+Perturbed: "I hatde every sngle sechnd of this dheadfully boxring film." (Pred: Positive)
+Success: True
+
+Original:  "The acting was superb and the plot was incredibly engaging." (Pred: Positive)
+Perturbed: "The acting was supCerb and the plot was incrbedibly negaging." (Pred: Negative)
+Success: True
+
+Original:  "It was a total waste of money and time, poorly directed." (Pred: Negative)
+Perturbed: "It was a total wste of Soney and tie, poroly directed." (Pred: Positive)
+Success: True
+
+Original:  "An excellent and highly entertaining thriller with great cast." (Pred: Positive)
+Perturbed: "An execllent and ihghly entertaininIg tZriller with grXat cast." (Pred: Negative)
+Success: True
+
+Original:  "Terrible script, awful performance, and extremely slow pacing." (Pred: Negative)
+Perturbed: "Terible sript, awvful performance, and extremely Ilow pacin." (Pred: Positive)
+Success: True
+
+Original:  "Highly recommended! One of the best movies of the year." (Pred: Positive)
+Perturbed: "Highly rePcommended! nOe of the bLest movies of the year." (Pred: Negative)
+Success: True
+
+Original:  "The story was predictable and completely lacked any emotion." (Pred: Negative)
+Perturbed: "The tory was preidctable and completley acked any emoion." (Pred: Positive)
+Success: True
+
+Original:  "Brilliant cinematography and deeply moving characters." (Pred: Positive)
+Perturbed: "Brilliat cinematography and deeEly omving characters." (Pred: Negative)
+Success: True
+
+Original:  "Unwatchable trash. I do not recommend this to anyone." (Pred: Negative)
+Perturbed: "Unwatchalbe trsah. I do not reEcommend this to anoyne." (Pred: Negative)
+Success: False
+

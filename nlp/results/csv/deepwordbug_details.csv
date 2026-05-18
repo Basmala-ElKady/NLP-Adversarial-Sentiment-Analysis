@@ -1,0 +1,11 @@
+success,original_text,perturbed_text
+True,This movie is an absolute masterpiece of modern cinema.,This movie is an albsolute amsterpiece of modern inema.
+True,I hated every single second of this dreadfully boring film.,I hatde every sngle sechnd of this dheadfully boxring film.
+True,The acting was superb and the plot was incredibly engaging.,The acting was supCerb and the plot was incrbedibly negaging.
+True,"It was a total waste of money and time, poorly directed.","It was a total wste of Soney and tie, poroly directed."
+True,An excellent and highly entertaining thriller with great cast.,An execllent and ihghly entertaininIg tZriller with grXat cast.
+True,"Terrible script, awful performance, and extremely slow pacing.","Terible sript, awvful performance, and extremely Ilow pacin."
+True,Highly recommended! One of the best movies of the year.,Highly rePcommended! nOe of the bLest movies of the year.
+True,The story was predictable and completely lacked any emotion.,The tory was preidctable and completley acked any emoion.
+True,Brilliant cinematography and deeply moving characters.,Brilliat cinematography and deeEly omving characters.
+False,Unwatchable trash. I do not recommend this to anyone.,Unwatchalbe trsah. I do not reEcommend this to anoyne.

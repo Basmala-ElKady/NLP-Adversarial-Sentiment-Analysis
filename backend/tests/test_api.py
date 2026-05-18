@@ -1,12 +1,12 @@
 from fastapi.testclient import TestClient
-from app.main import app
+from backend.main import app
 
 client = TestClient(app)
 
 def test_home():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json()["message"] == "Robust Sentiment Analysis API"
+    assert response.json()["message"] == "Robust Sentiment Analysis API is running."
 
 def test_prediction():
     response = client.post(
